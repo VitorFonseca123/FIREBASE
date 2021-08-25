@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="css/estilo.css">
+
+    <script src="cordova.js"></script>
+    <script src="js/Jquery.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+    <script src="js/excluir.js"></script>
+
+    <title>Editor de Clientes</title>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Aplicativo</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Cadastro</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="consulta.html">Consulta</a>
+        </li>
+        
+    </div>
+  </nav>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Excluir - Agendamento de Potenciais Clientes</h5>
+            <p class="card-text">Sistema utilizado para agendamento de serviços.</p>
+            <form>
+
+                <div class="form-group">
+                    <label for="txtNome">Nome:</label>
+                    <input type="text" class="form-control" id="cadNome">
+
+                    <label for="txtTelefone">Telefone:</label>
+                    <input type="text" class="form-control" id="cadtelefone" placeholder="(xx)xxxxx-xxxx">
+
+                    <label for="txtOrigem">Origem:</label>
+                    <select class="form-control" id="txtorigem">
+                        <option>Celular</option>
+                        <option>Fixo</option>
+                        <option>Whatsapp</option>
+                        <option>Facebook</option>
+                        <option>Instagram</option>
+                        <option>Google Meu Negocio/option>
+                    </select>
+
+                    <label for="txtData">Data de Contato:</label>
+                    <input type="date" class="form-control" id="cadData">
+
+                    <label for="txtObs">Observação</label>
+                    <textarea class="form-control" id="observacoes" rows="3"></textarea>
+                  </br>
+                    <button type="submit" id="btnExcluir" class="btn btn-primary">Excluir</button>
+                    <button type="button" id="btnBuscar" class="btn btn-primary">Buscar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+</html>

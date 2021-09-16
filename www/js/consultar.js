@@ -1,58 +1,71 @@
-var app = {
-
-    // Application Constructor
-    initialize: function() {
+/*var app = {
+    initialize: function(){
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     },
+    onDeviceReady: function(){
+        document.getElementById("btnListar").addEventListener("click", app.listar);
 
-    onDeviceReady: function() {
-        document.getElementById("btnListar").addEventListener("click",app.listar);
-        this.receivedEvent('deviceready');
     },
-
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-        db = window.sqlitePlugin.openDatabase({
-            name: 'aplicativo.db',
-            location: 'default',            
-            androidDatabaseProvider: 'system'
-        });
-
-        db.transaction(function(tx) {
-            tx.executeSql('CREATE TABLE IF NOT EXISTS clientes (nome, telefone, origem, data_contato, observacao)');
-        }, function(error) {
-            console.log('Transaction ERROR: ' + error.message);
-        }, function() {
-            alert('Banco e Tabela clientes criados com sucesso!!!');
-        });
-    },
-    
     listar: function(){
-        db.executeSql(
-            'SELECT nome AS uNome, telefone AS uTelefone, origem AS uOrigem, data_contato AS uDataContato, observacao AS uObservacao FROM clientes', [], function(rs) {
-                alert(JSON.stringify(rs));
-                alert(rs.rows.length);
-                let i = 0;
-                for(i = 0; i < rs.rows.length; i++){
-                    alert("item "+i);
-                    let recordItem = rs.rows.item(i);
-                    alert(JSON.stringify(recordItem));
-                    $("#TableData").append("<tr>");
-                    $("#TableData").append("<td scope='col'>" + rs.rows.item(i).uNome + "</td>");
-                    $("#TableData").append("<td scope='col'>" + rs.rows.item(i).uTelefone + "</td>");
-                    $("#TableData").append("<td scope='col'>" + rs.rows.item(i).uOrigem + "</td>");
-                    $("#TableData").append("<td scope='col'>" + rs.rows.item(i).uDataContato + "</td>");
-                    $("#TableData").append("<td scope='col'>" + rs.rows.item(i).uObservacao + "</td>");
-                    $("#TableData").append("<td scope='col'><a href='" + cordova.file.applicationDirectory + "www/editarClientes.html?telefone=" + rs.rows.item(i).uTelefone + "'>Editar</a></td>");
-                    $("#TableData").append("<td scope='col'><a href='" + cordova.file.applicationDirectory + "www/excluir.html?telefone=" + rs.rows.item(i).uTelefone + "'>Excluir</a></td>");
-                    $("#TableData").append("</tr>");
-                }
-            alert('Record count (expected to be 2): ' + rs.rows.item(0).uLoginName);
-        }, function(error) {
-            alert('Erro no SELECT: ' + error.message);
-        }); 
-    }
+        var db = firebase.firestore();
+        var ag = db.collection("Cadastro");
 
-};
+        ag.get().then((querySnapshot) =>{
+            querySnapshot.forEach((doc) =>{
+                console.log(doc.id, "=>", doc.data());
+                $("#TableData").append("<tr>");
+                $("#TableData").append("<td scope='col"+doc.data().nome + "<td>");
+                $("#TableData").append("<td scope='col"+doc.data().telefone + "<td>");
+                $("#TableData").append("<td scope='col"+doc.data().origem + "<td>");
+                $("#TableData").append("<td scope='col"+doc.data().data + "<td>");
+                $("#TableData").append("<td scope='col"+doc.data().observacao + "<td>");
+
+                $("#TableData").append("<td scope='col'><a href=' " + cordova.file.applicationDirectory + "www.editarClientes.html?telefone=");
+                $("#TableData").append("</tr>");
+            });
+            
+        })
+        .catch((error)=>{
+            console.log("ERROR getting documents: ", error);
+        });
+    }
+}*/
+var app = {
+
+    //Construtor do app
+     initialize: function() {
+         console.info("Iniciando...");
+         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+     },
+     onDeviceReady: function() {
+        console.info("Device Ready");
+        app.buscar();
+    },
+    buscar: function(){
+        console.log("Busca Iniciada");
+        var db = firebase.firestore();
+        var collCadastros = db.collection('Cadastro');
+        
+        collCadastros.get()
+        .then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                let rowContent ="<tr>" +
+                                "<td>" + doc.data().Nome + "</td>" +
+                                "<td>" + doc.data().telefone + "</td>" +
+                                "<td>" + doc.data().Origem + "</td>" +
+                                "<td>" + doc.data().data_contato + "</td>" +
+                                "<td class='text-wrap'>" + doc.data().observacao + "</td>" +
+                                "<td class='table-borderless'><a href='./editarclientes.html?telefone=" + doc.data().telefone + "'><p>Editar</P></a></td>" +
+                                "<td class='table-borderless'><a href='./excluir.html?telefone=" + doc.data().telefone + "'><p>Excluir</a></td>" +
+                                "</tr>";
+                
+                document.getElementById("TableData").innerHTML += rowContent;
+            })
+        })
+        .catch((error) => {
+            console.log("Erro ao consultar documento: " + error);
+        })
+    }
+}
 
 app.initialize();

@@ -8,6 +8,7 @@ var app = {
     onDeviceReady: function() {
         document.getElementById("btnBuscar").addEventListener("click",app.buscar);
         document.getElementById("btnEditar").addEventListener("click",app.editar);
+        
     },
 
     buscar: function(){
@@ -65,7 +66,7 @@ var app = {
                 })
                 .then(() => {
                     console.log("Document successfully updated!");
-                    window.location.href = cordova.file.applicationDirectory + "www/consulta.html";
+                    window.location.href = "consulta.html";
                 })
                 .catch((error) => {
                     // The document probably doesn't exist.
